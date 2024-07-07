@@ -13,3 +13,15 @@ type Task = {
 // create an array of tasks
 const tasks:Task[] = [];
 
+function createTask(e:SubmitEvent){
+    e.preventDefault();
+
+    if (todoInput) {
+        console.log(todoInput.value);
+
+        todoInput.value = "";
+    }
+    alert("Please enter the task");
+    return;
+}
+todoForm.addEventListener('submit', createTask)
