@@ -11,7 +11,7 @@ type Task = {
 }
 
 // create an array of tasks
-const tasks:Task[] = loadTodo();
+let tasks:Task[] = loadTodo();
 
 tasks.forEach(renderTodo)
 
@@ -59,7 +59,13 @@ function renderTodo(task: Task): void{
         task.isComplete = !task.isComplete;
         updateLocalStorage();
     })
+
+    const removeButton = document.createElement('button');
+    removeButton.textContent = "Remove";
+    removeButton.addEventListener('click', ()=>removeTodo(task, todoItem))
+
     todoItem.appendChild(todoStatus);
+    todoItem.appendChild(removeButton);
     todoList?.appendChild(todoItem);
 }
 
@@ -67,3 +73,8 @@ function updateLocalStorage():void{
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
+function removeTodo(task:Task, todoItem:HTMLElement):void {
+    tasks = tasks.filter(t => t !== task);
+    todoItem.remove();
+    updateLocalStorage();
+}
