@@ -53,8 +53,12 @@ function renderTodo(task: Task): void{
 
     const todoStatus = document.createElement('input');
     todoStatus.type = "checkbox";
-    todoStatus.name = "checked";
+    todoStatus.checked = task.isComplete
 
+    todoStatus.addEventListener('change', ()=>{
+        task.isComplete = !task.isComplete;
+        updateLocalStorage();
+    })
     todoItem.appendChild(todoStatus);
     todoList?.appendChild(todoItem);
 }

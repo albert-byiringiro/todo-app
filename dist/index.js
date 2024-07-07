@@ -40,7 +40,11 @@ function renderTodo(task) {
     todoItem.textContent = task.description;
     const todoStatus = document.createElement('input');
     todoStatus.type = "checkbox";
-    todoStatus.name = "checked";
+    todoStatus.checked = task.isComplete;
+    todoStatus.addEventListener('change', () => {
+        task.isComplete = !task.isComplete;
+        updateLocalStorage();
+    });
     todoItem.appendChild(todoStatus);
     todoList === null || todoList === void 0 ? void 0 : todoList.appendChild(todoItem);
 }
