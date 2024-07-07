@@ -1,6 +1,6 @@
 // get dom elements
-const todoForm = document.querySelector<HTMLFormElement>('.todo-form')!;
-const todoInput = document.querySelector<HTMLInputElement>('.todo-input');
+const todoForm = document.querySelector<HTMLFormElement>('.todo-form');
+const todoInput = document.querySelector<HTMLInputElement>('.todo-input')!;
 const todoSubmit = document.querySelector<HTMLButtonElement>('.todo-submit');
 const todoList = document.querySelector<HTMLUListElement>('.list');
 
@@ -15,13 +15,38 @@ const tasks:Task[] = [];
 
 function createTask(e:SubmitEvent){
     e.preventDefault();
-
-    if (todoInput) {
-        console.log(todoInput.value);
-
+    const todoValue = todoInput.value;
+    if (todoValue) {
+        const task:Task = {
+            description: todoInput.value,
+            isComplete: false
+        }
+        // add task
+        addTask(task)
+        // render task
+        renderTask(task);
+        // update task
         todoInput.value = "";
+        return;
     }
     alert("Please enter the task");
-    return;
 }
-todoForm.addEventListener('submit', createTask)
+
+todoForm?.addEventListener('submit', createTask)
+
+function addTask(task: Task): void{
+    tasks.push(task);
+    console.log(tasks);
+}
+
+function renderTask(task: Task): void{
+    const todoItem = document.createElement('li');
+    todoItem.textContent = task.description;
+
+    const todoStatus = document.createElement('input');
+    todoStatus.type = "checkbox";
+    todoStatus.name = "checked";
+
+    todoItem.appendChild(todoStatus);
+    todoList?.appendChild(todoItem);
+}

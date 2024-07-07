@@ -8,11 +8,33 @@ const todoList = document.querySelector('.list');
 const tasks = [];
 function createTask(e) {
     e.preventDefault();
-    if (todoInput) {
-        console.log(todoInput.value);
+    const todoValue = todoInput.value;
+    if (todoValue) {
+        const task = {
+            description: todoInput.value,
+            isComplete: false
+        };
+        // add task
+        addTask(task);
+        // render task
+        renderTask(task);
+        // update task
         todoInput.value = "";
+        return;
     }
     alert("Please enter the task");
-    return;
 }
-todoForm.addEventListener('submit', createTask);
+todoForm === null || todoForm === void 0 ? void 0 : todoForm.addEventListener('submit', createTask);
+function addTask(task) {
+    tasks.push(task);
+    console.log(tasks);
+}
+function renderTask(task) {
+    const todoItem = document.createElement('li');
+    todoItem.textContent = task.description;
+    const todoStatus = document.createElement('input');
+    todoStatus.type = "checkbox";
+    todoStatus.name = "checked";
+    todoItem.appendChild(todoStatus);
+    todoList === null || todoList === void 0 ? void 0 : todoList.appendChild(todoItem);
+}
