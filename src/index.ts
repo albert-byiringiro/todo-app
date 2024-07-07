@@ -26,6 +26,7 @@ function createTask(e:SubmitEvent){
         // render task
         renderTask(task);
         // update task
+        updateLocalStorage()
         todoInput.value = "";
         return;
     }
@@ -49,4 +50,8 @@ function renderTask(task: Task): void{
 
     todoItem.appendChild(todoStatus);
     todoList?.appendChild(todoItem);
+}
+
+function updateLocalStorage():void{
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }

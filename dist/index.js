@@ -19,6 +19,7 @@ function createTask(e) {
         // render task
         renderTask(task);
         // update task
+        updateLocalStorage();
         todoInput.value = "";
         return;
     }
@@ -37,4 +38,7 @@ function renderTask(task) {
     todoStatus.name = "checked";
     todoItem.appendChild(todoStatus);
     todoList === null || todoList === void 0 ? void 0 : todoList.appendChild(todoItem);
+}
+function updateLocalStorage() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
