@@ -5,8 +5,13 @@ const todoInput = document.querySelector('.todo-input');
 const todoSubmit = document.querySelector('.todo-submit');
 const todoList = document.querySelector('.list');
 // create an array of tasks
-const tasks = [];
-function createTask(e) {
+const tasks = loadTodo();
+tasks.forEach(renderTodo);
+function loadTodo() {
+    const storedTodo = localStorage.getItem('tasks');
+    return storedTodo ? JSON.parse(storedTodo) : [];
+}
+function createTodo(e) {
     e.preventDefault();
     const todoValue = todoInput.value;
     if (todoValue) {
@@ -15,9 +20,9 @@ function createTask(e) {
             isComplete: false
         };
         // add task
-        addTask(task);
+        addTodo(task);
         // render task
-        renderTask(task);
+        renderTodo(task);
         // update task
         updateLocalStorage();
         todoInput.value = "";
@@ -25,12 +30,12 @@ function createTask(e) {
     }
     alert("Please enter the task");
 }
-todoForm === null || todoForm === void 0 ? void 0 : todoForm.addEventListener('submit', createTask);
-function addTask(task) {
+todoForm === null || todoForm === void 0 ? void 0 : todoForm.addEventListener('submit', createTodo);
+function addTodo(task) {
     tasks.push(task);
     console.log(tasks);
 }
-function renderTask(task) {
+function renderTodo(task) {
     const todoItem = document.createElement('li');
     todoItem.textContent = task.description;
     const todoStatus = document.createElement('input');

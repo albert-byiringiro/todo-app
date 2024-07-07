@@ -11,9 +11,16 @@ type Task = {
 }
 
 // create an array of tasks
-const tasks:Task[] = [];
+const tasks:Task[] = loadTodo();
 
-function createTask(e:SubmitEvent){
+tasks.forEach(renderTodo)
+
+function loadTodo():Task[] {
+    const storedTodo = localStorage.getItem('tasks');
+    return storedTodo ? JSON.parse(storedTodo) : [];
+}
+
+function createTodo(e:SubmitEvent){
     e.preventDefault();
     const todoValue = todoInput.value;
     if (todoValue) {
@@ -22,9 +29,9 @@ function createTask(e:SubmitEvent){
             isComplete: false
         }
         // add task
-        addTask(task)
+        addTodo(task)
         // render task
-        renderTask(task);
+        renderTodo(task);
         // update task
         updateLocalStorage()
         todoInput.value = "";
@@ -33,14 +40,14 @@ function createTask(e:SubmitEvent){
     alert("Please enter the task");
 }
 
-todoForm?.addEventListener('submit', createTask)
+todoForm?.addEventListener('submit', createTodo)
 
-function addTask(task: Task): void{
+function addTodo(task: Task): void{
     tasks.push(task);
     console.log(tasks);
 }
 
-function renderTask(task: Task): void{
+function renderTodo(task: Task): void{
     const todoItem = document.createElement('li');
     todoItem.textContent = task.description;
 
@@ -55,3 +62,4 @@ function renderTask(task: Task): void{
 function updateLocalStorage():void{
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
+
